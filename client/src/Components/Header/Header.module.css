@@ -1,0 +1,14 @@
+.logo{
+    position: relative;
+}
+
+.logo:hover img{
+    filter: drop-shadow(2px 1px 3px rgb(193, 193, 193));
+}
+
+.search{
+    cursor: pointer;
+}
+.search:hover{
+    filter: drop-shadow(2px 1px 3px rgb(193, 193, 193));
+}
