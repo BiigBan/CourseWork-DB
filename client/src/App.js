@@ -1,17 +1,33 @@
 import './App.css';
-import Main from './Components/Main/Main';
-import { createTheme, ThemeProvider, Typography, useMediaQuery } from '@mui/material';
-import Header from './Components/Header/Header';
-import { Context } from './Context';
-import Footer from './Components/Footer/Footer';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './Components/Login/Login';
-import Registration from './Components/Registration/Registration';
+
 import { useEffect } from 'react';
-import axios from 'axios';
+
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
+
+import {
+  createTheme,
+  ThemeProvider,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
+
+import Footer from './Components/Footer/Footer';
+import Header from './Components/Header/Header';
+import Login from './Components/Login/Login';
+import Main from './Components/Main/Main';
 import Profile from './Components/Profile/Profile';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeLang, getUser } from './store/authSlice';
+import Registration from './Components/Registration/Registration';
+import { Context } from './Context';
+import { getUser } from './store/authSlice';
 import { getNews } from './store/newsSlice';
 
 function App() {
@@ -28,7 +44,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (lang.length > 0) {
+    if ( lang !== undefined) {
       dispatch(getNews({ lang, media: 'True' }))
     }
   }, [lang])
@@ -58,13 +74,14 @@ function App() {
   }
   else {
     return (
+      <>
       <Context.Provider value={smallPhone}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <Header />
             <Routes>
               <Route path='/news-app' element={<Main />} />
-              <Route path='/' element={<Main />} />
+              <Route path='/' element={<Navigate to={'/news-app'}/>} />
               <Route path='/login' element={<Login />} />
               <Route path='/news-app/login' element={<Login />} />
               <Route path='/registration' element={<Registration />} />
@@ -76,6 +93,7 @@ function App() {
           </BrowserRouter>
         </ThemeProvider>
       </Context.Provider>
+      </>
     )
   }
 }
